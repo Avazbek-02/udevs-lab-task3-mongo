@@ -24,7 +24,6 @@ func Server() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Server is running on :8081")
 	err = newServer.Serve(lis)
 	if err != nil {
 		log.Fatal(err)
