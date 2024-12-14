@@ -1,12 +1,12 @@
 package server
 
 import (
+	pb "app/genprotos/user"
 	"app/service"
 	mongodb "app/storage/mongoDB"
-	"fmt"
 	"log"
 	"net"
-	pb "app/genprotos/user"
+
 	"google.golang.org/grpc"
 )
 
