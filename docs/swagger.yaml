@@ -1,0 +1,230 @@
+basePath: /
+definitions:
+  user.CreateUserRequest:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+    type: object
+  user.CreateUserResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  user.DeleteUserResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  user.GetAllUserResponse:
+    properties:
+      user:
+        items:
+          $ref: '#/definitions/user.User'
+        type: array
+    type: object
+  user.GetUserResponse:
+    properties:
+      user:
+        $ref: '#/definitions/user.User'
+    type: object
+  user.UpdateUserRequest:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: string
+      lastName:
+        type: string
+    type: object
+  user.UpdateUserResponse:
+    properties:
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  user.User:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: string
+      lastName:
+        type: string
+    type: object
+host: localhost:8088
+info:
+  contact: {}
+  description: user service
+  version: "1.0"
+paths:
+  /user/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user with the provided information
+      parameters:
+      - description: Create User Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User successfully created
+          schema:
+            $ref: '#/definitions/user.CreateUserResponse'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+      summary: Create a new user
+      tags:
+      - user
+  /user/delete/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Delete a user by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User successfully deleted
+          schema:
+            $ref: '#/definitions/user.DeleteUserResponse'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "404":
+          description: User not found
+          schema:
+            type: string
+      summary: Delete a user by ID
+      tags:
+      - user
+  /user/get-all:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of users based on the provided filters. If no filter
+        is provided, all users are returned.
+      parameters:
+      - description: Filter by first name
+        in: query
+        name: firstName
+        type: string
+      - description: Filter by last name
+        in: query
+        name: lastName
+        type: string
+      - description: Filter by email
+        in: query
+        name: email
+        type: string
+      - description: Filter by age
+        in: query
+        name: age
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Users found
+          schema:
+            $ref: '#/definitions/user.GetAllUserResponse'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+      summary: Get all users with optional filters
+      tags:
+      - user
+  /user/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a user by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User found
+          schema:
+            $ref: '#/definitions/user.GetUserResponse'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "404":
+          description: User not found
+          schema:
+            type: string
+      summary: Get user by ID
+      tags:
+      - user
+  /user/update:
+    put:
+      consumes:
+      - application/json
+      description: Update an existing user with new details
+      parameters:
+      - description: Update User Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User successfully updated
+          schema:
+            $ref: '#/definitions/user.UpdateUserResponse'
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "404":
+          description: User not found
+          schema:
+            type: string
+      summary: Update an existing user
+      tags:
+      - user
+swagger: "2.0"
